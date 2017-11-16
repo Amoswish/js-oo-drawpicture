@@ -1,0 +1,44 @@
+*{margin:0; padding:0}
+body{
+  width:960px;
+  margin:20px auto;
+  font-size:120%;
+}
+/*导航条*/
+#nav {background-color:rgba(0,152,50,0.4);
+      color:#fff;
+      height:30px;
+      line-height:25px;
+      text-align:center;
+      list-style:none;
+}
+ #nav a{
+   color:rgba(0,0,0,0.7);
+ }
+ #nav li{
+   width:10%;
+   height: 30px;
+   float:left;
+   position:relative;
+   z-index:1;
+ }
+ #nav li .title{
+   display:block;
+ }
+ #nav li .title:hover{
+   background-color:rgba(255, 255, 51,0.4);
+ }
+ #nav li .submenu{
+   width:100%;
+   margin:0 auto;
+   background-color: rgba(253,152,0,0.7);
+   position:absolute;
+   left:0;
+   top:25px;
+   display:none;
+   height: 0px;
+ }
+ #nav li .submenu dd{
+   border-top:1px dotted #ddd;
+   color:rgba(0,0,0,0.7);
+ }

@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<style media="screen">
+		input[type="text"]{
+			width:30px;
+		}
+		input[type="file"]{
+			width:70px;
+		}
+		</style>
+	</head>
+	<body>
+		<div>
+			<div>
+				<input type="radio" name="shap" id="circleButton" checked="true">circle</input>
+				<input type="radio" name="shap" id="rectButton">rectangle</input>
+				<input type="radio" name="shap" id="lineButton">line</input>
+				<input type="radio" name="shap" id="curveButton">curve</input>
+				<input type="radio" name="shap" id="eraseButton">erase</input>
+				<span>线条粗细：<input type="text" name="shap" id="widthofdraw"></input></span>
+				<button id="imageupload" type="button">添加到画布</button>
+				<input id="fileUpload0" type="file" accept="image/png,image/gif,image/jpeg,image/bmp"></input>
+				<input type="color" id = "textcolor"></input>
+			</div>
+			<canvas id="myCanvas" style=" border:1px solid;" width="800" height="500"></canvas>
+			</div>
+	</body>
+	<script language="JavaScript">
+		var shap = 0; //0 is circle; 1 is rectangle
+		var orignalX, orignalY;//the coordinate of mouse down
+		var lastX, lastY;//the coordinate of last mouse position
+		var isMouseDown = false; // flag of mouse pressing down
+		var circleButton = document.getElementById("circleButton");
+		var rectButton = document.getElementById("rectButton");
+		var lineButton = document.getElementById("lineButton");
+		var curveButton = document.getElementById("curveButton");
+		var eraseButton = document.getElementById("eraseButton");
+		var drawpicture = document.getElementById("imageupload");
+		var context = myCanvas.getContext('2d');
+		var oldx = 0;
+		var oldy = 0;
+		var width = myCanvas.width, height = myCanvas.height;
+		var data;//storing last canvas' content
+		var textcolor = document.getElementById('textcolor').value
+		context.strokeWidth=document.getElementById("widthofdraw");
+
+		function circleButtonClick() {
+			shap = 0;
+		}
+
+		function rectButtonClick() {
+			shap = 1;
+		}
+		function lineButtonClick() {
+			shap = 2;
+		}
+		function curveButtonClick() {
+			shap = 3;
+		}
+		function eraseButtonClick() {
+			shap = 4;
+		}
+
+		function myCanvasMouseDown(event) {
+			//event.preventDefault();
+
+			if(event.button == 0) {
+				textcolor = document.getElementById('textcolor').value
+				context.strokeStyle = textcolor;
+				context.lineWidth=document.getElementById("widthofdraw").value;
+				orignalX = event.offsetX;
+				orignalY = event.offsetY;
+				data = context.getImageData(0, 0, width, height);
+				isMouseDown = true;
+				oldx = orignalX;
+				oldy = orignalY;
+			}
+		}
+
+		function myCanvasMouseMove(event) {
+			if (isMouseDown){
+				//event.preventDefault();
+
+
+
+				lastX = event.offsetX;
+				lastY = event.offsetY;
+				switch(shap){
+					case 0:
+						context.clearRect(0,0,width,height);
+						context.putImageData(data,0,0);
+						context.beginPath();
+						context.arc(orignalX+(lastX-orignalX)/2,orignalY+(lastY-orignalY)/2,Math.abs(lastX-orignalX)/2,0,Math.PI * 2,true);
+						context.stroke();
+						context.closePath();
+						break;
+					case 1:
+						context.clearRect(0,0,width,height);
+					  context.putImageData(data,0,0);
+						context.strokeRect(orignalX, orignalY, lastX-orignalX, lastY-orignalY);
+						break;
+					case 2:
+						context.clearRect(0,0,width,height);
+						context.putImageData(data,0,0);
+						context.beginPath();
+					  context.moveTo(orignalX,orignalY);
+    		    context.lineTo(lastX,lastY);
+					  context.stroke();
+					  context.closePath();
+						break;
+					case 3:
+						context.beginPath();
+					  context.moveTo(oldx,oldy);
+					  context.lineTo(lastX,lastY);
+					  context.stroke();
+					  context.closePath();
+					  oldx = lastX;
+					  oldy = lastY;
+						break;
+					case 4:
+						context.clearRect(oldx-20, oldy-20, lastX-oldx+20, lastY-oldy+20);
+						oldx = lastX;
+					  oldy = lastY;
+						break;
+				}
+			}
+		}
+
+		function myCanvasMouseUp(event) {
+			if (isMouseDown){
+				//event.preventDefault();
+
+
+				lastX = event.offsetX;
+				lastY = event.offsetY;
+				switch(shap){
+					case 0:
+						context.clearRect(0,0,width,height);
+						context.putImageData(data,0,0);
+						context.beginPath();
+						context.arc(orignalX+(lastX-orignalX)/2,orignalY+(lastY-orignalY)/2,Math.abs(lastX-orignalX)/2,0,Math.PI * 2,true);
+						context.stroke();
+						context.closePath();
+						break;
+					case 1:
+						context.clearRect(0,0,width,height);
+						context.putImageData(data,0,0);
+						context.strokeRect(orignalX, orignalY, lastX-orignalX, lastY-orignalY);
+						break;
+					case 2:
+						context.clearRect(0,0,width,height);
+						context.putImageData(data,0,0);
+						context.beginPath();
+						context.moveTo(orignalX,orignalY);
+						context.lineTo(lastX,lastY);
+						context.stroke();
+						context.closePath();
+						break;
+					case 3:
+						context.beginPath();
+						context.moveTo(oldx,oldy);
+						context.lineTo(lastX,lastY);
+						context.stroke();
+						context.closePath();
+						break;
+					case 4:
+						context.clearRect(oldx-20, oldy-20, lastX-oldx+20, lastY-oldy+20);
+						oldx = lastX;
+						oldy = lastY;
+						break;
+				}
+				isMouseDown = false;
+				lastX = null;
+				lastY = null;
+			}
+		}
+		function drawimg(){
+
+			var file = document.getElementById('fileUpload0').files[0];
+			var imagelink = "";
+				// var imglink = getPath(document.getElementById('fileUpload0'));
+				if(window.FileReader) {
+						var fr = new FileReader();
+						fr.onloadend = function(e) {
+								 imagelink = e.target.result;
+								 var beauty = new Image();
+								 beauty.src = imagelink;
+								 context.drawImage(beauty, 0, 0);
+						};
+
+					fr.readAsDataURL(file);
+				}
+
+
+			}
+    drawpicture.addEventListener("click",drawimg,false);
+		circleButton.addEventListener("click", circleButtonClick, false);
+		rectButton.addEventListener("click", rectButtonClick, false);
+		lineButton.addEventListener("click", lineButtonClick, false);
+		curveButton.addEventListener("click", curveButtonClick, false);
+		eraseButton.addEventListener("click", eraseButtonClick, false);
+		myCanvas.addEventListener("mousedown", myCanvasMouseDown, false);
+		myCanvas.addEventListener("mousemove", myCanvasMouseMove, false);
+		window.addEventListener("mouseup", myCanvasMouseUp, false);
+	</script>
+	<script language="JavaScript">
+	</script>
+</html>

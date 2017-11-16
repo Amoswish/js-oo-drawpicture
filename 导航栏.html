@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>二级下拉菜单</title>
+<style type="text/css">
+<link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
+<script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+/*
+#193B5F 栏目字体颜色
+*/
+*{margin:0; padding:0}
+body{
+  width:960px;
+  margin:20px auto;
+  font-size:120%;
+}
+/*导航条*/
+#nav {background-color:rgba(0,152,50,0.4);
+      color:#fff;
+      height:30px;
+      line-height:25px;
+      text-align:center;
+      list-style:none;
+}
+ #nav a{
+   color:rgba(0,0,0,0.7);
+ }
+ #nav li{
+   width:10%;
+   height: 30px;
+   float:left;
+   position:relative;
+   z-index:1;
+ }
+ #nav li .title{
+   display:block;
+ }
+ #nav li .title:hover{
+   background-color:rgba(255, 255, 51,0.4);
+ }
+ #nav li .submenu{
+   width:100%;
+   margin:0 auto;
+   background-color: rgba(253,152,0,0.7);
+   position:absolute;
+   left:0;
+   top:25px;
+   display:none;
+   height: 0px;
+ }
+ #nav li .submenu dd{
+   border-top:1px dotted #ddd;
+   color:rgba(0,0,0,0.7);
+ }
+ .draw{
+   margin-top: 0px;
+   padding-top: 0px;
+   border-top: 2px;
+   background-color: blue;
+ }
+ .canvas{
+    border:solid;
+    border-color: blue;
+    border-width:medium;
+    margin-left: 0px;
+    height: 600px;
+    width: 100%;
+ }
+
+</style>
+</head>
+<body>
+<!-- 导航栏 -->
+<div>
+<ul id="nav" >
+<!-- 有二级菜单的，给li加class="menu" 没有的不用加 -->
+  <li class="menu">
+   <a href="#" class="title">画图形</a>
+   <dl class="submenu">
+    <dd><a href="#">矩形</a></dd>
+    <dd><a href="#">圆形</a></dd>
+   </dl>
+  </li>
+  <li class="menu">
+   <a href="#" class="title">画线</a>
+   <dl class="submenu">
+    <dd><a href="#">直线</a></dd>
+    <dd><a href="#">曲线</a></dd>
+   </dl>
+  </li>
+  <li class="menu">
+   <a href="#" class="title">读取数据</a>
+ </li>
+  <li class="menu">
+   <a href="#" class="title">橡皮擦</a>
+  </li>
+</nav><!--end nav-->
+</div>
+<!-- 导航栏结束 -->
+<!-- 画布 -->
+<canvas class="canvas" ></canvas>
+<!-- 画布结束 -->
+<script type="text/javascript">
+    // 导航栏动态
+  var nav = document.getElementById("nav").childNodes;
+  for (var i=0;i<nav.length;i++){
+      if (nav[i].className=="menu"){
+        nav[i].onmouseover = function(){fnNav(this,"block","100px")};
+        nav[i].onmouseout = function(){fnNav(this,"none","0px")};
+      }
+  }
+  function fnNav(obj,flag,flag1){
+   obj.getElementsByTagName("dl")[0].style.display = flag;
+   obj.getElementsByTagName("dl")[0].style.height = flag1;
+  }
+  // 导航栏动态结束
+</script>
+</body>
+</html>

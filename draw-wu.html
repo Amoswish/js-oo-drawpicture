@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/canvas.css">
+    </script>
+  </head>
+  <body>
+    <!-- 导航栏 -->
+    <div>
+    <ul id="nav" >
+    <!-- 有二级菜单的，给li加class="menu" 没有的不用加 -->
+      <li class="menu">
+       <a href="#" class="title">画图形</a>
+       <dl class="submenu">
+        <dd><button type="button" id="rect" class="select">矩形</button></dd>
+        <dd><button type="button" id="circle" class="select">圆形</button></dd>
+       </dl>
+      </li>
+      <li class="menu">
+       <a href="#" class="title">画线</a>
+       <dl class="submenu">
+        <dd><button type="button" id="line" class="select">直线</button></dd>
+        <dd><button type="button" id="curve" class="select">曲线</button></dd>
+       </dl>
+      </li>
+      <li class="menu">
+       <a href="#" class="title">读取/存储</a>
+       <dl class="submenu">
+        <dd><button type="button" id="line" class="select">导入</button></dd>
+        <dd><button type="button" id="curve" class="select">保存</button></dd>
+       </dl>
+      </li>
+      <li class="menu">
+       <a href="#" class="title">样式</a>
+       <dl class="submenu">
+        <dd><button type="button" id="line" class="select">粗细</button></dd>
+        <dd><button type="button" id="curve" class="select">颜色</button></dd>
+       </dl>
+      </li>
+      <li class="menu">
+       <a href="#" class="title">橡皮擦</a>
+       <dl class="submenu">
+        <dd><button type="button" id="erase" class="select">橡皮擦</button></dd>
+       </dl>
+      </li>
+    </nav><!--end nav-->
+    </div>
+    <!-- 导航栏结束 -->
+    <!-- 画布 -->
+    <canvas class="canvas" id="myCanvas"  height="500" width="955.9"></canvas>
+    <!-- 画布结束 -->
+  </body>
+      <!-- 导航栏 -->
+      <script type="text/javascript" src="js/header.js"></script>
+      <script type="text/javascript" src="js/a.js"></script>
+      <script type="text/javascript">
+        var shap = ""
+        var isMouseDown = false
+        var diagram = graph()
+        var circleButton = document.getElementById("circle")
+        var rectButton = document.getElementById("rect")
+        var lineButton = document.getElementById("line")
+        var curveButton = document.getElementById("curve")
+        var eraseButton = document.getElementById("erase")
+        var graphPool = new Array()
+        var deletePool = new Array()
+        //diagram.aab()
+        //选择哪种图形需要画
+        function circleSelected(){
+          shap = "circle"
+        }
+        function rectSelected(){
+          shap = "rectangle"
+        }
+        function lineSelected(){
+          shap = "line"
+        }
+        function curveSelected(){
+          shap = "curve"
+        }
+        function eraseSelected(){
+          shap = "erase"
+        }
+        function myCanvasMouseDown(event){
+          if(event.button == 0) {
+            diagram.setStart(event.offsetX,event.offsetY)
+            if(shap == "erase"){
+              var myCanvas = document.getElementById("myCanvas")
+              var context = myCanvas.getContext('2d')
+              for (var i = 0; i < graphPool.length; i++) {
+                graphPool[i]
+              }
+                  console.log("sss");
+            }
+            isMouseDown = true
+          }
+
+        }
+        function myCanvasMouseMove(event){
+          if(isMouseDown){
+            switch (shap) {
+              case "circle":
+                  var circle1 =new circle()
+                  circle1.setStart(diagram.startX,diagram.startY)
+                  circle1.setFinal(event.offsetX,event.offsetY)
+                  circle1.clearCanvas()
+                  circle1.draw()
+                  for (var i = 0; i < graphPool.length; i++) {
+                    graphPool[i].draw()
+                  }
+                  break
+              case "rectangle":
+                  var rectangle1 =new rectangle()
+                  rectangle1.setStart(diagram.startX,diagram.startY)
+                  rectangle1.setFinal(event.offsetX,event.offsetY)
+                  rectangle1.clearCanvas()
+                  rectangle1.draw()
+                  for (var i = 0; i < graphPool.length; i++) {
+                    graphPool[i].draw()
+                  }
+                  break
+              case "line":
+                  break
+              case "curve":
+
+                  break
+
+                break
+                break
+                break
+            }
+          }
+        }
+        function myCanvasMouseUp(event){
+          if(isMouseDown){
+            // for (var i = 0; i < graph.length; i++) {
+            //   graph[i]
+            // }
+            switch (shap) {
+              case "circle":
+                  var circle1 =new circle()
+                  circle1.setStart(diagram.startX,diagram.startY)
+                  circle1.setFinal(event.offsetX,event.offsetY)
+                  circle1.clearCanvas()
+                  circle1.draw()
+                  graphPool.push(circle1)
+                  break
+              case "rectangle":
+                  var rectangle1 =new rectangle()
+                  rectangle1.setStart(diagram.startX,diagram.startY)
+                  rectangle1.setFinal(event.offsetX,event.offsetY)
+                  rectangle1.clearCanvas()
+                  rectangle1.draw()
+                  graphPool.push(rectangle1)
+                  break
+              case "line":
+                  break
+              case "curve":
+
+                  break
+                break
+                break
+                break
+              default:
+
+            }
+            for (var i = 0; i < graphPool.length; i++) {
+              graphPool[i].draw()
+              //console.log(graphPool[i]);
+            }
+            isMouseDown = false
+          }
+        }
+        //绑定选择事件
+        circleButton.addEventListener("click", circleSelected, false)
+        rectButton.addEventListener("click", rectSelected, false)
+        lineButton.addEventListener("click", lineSelected, false)
+        curveButton.addEventListener("click", curveSelected, false)
+        eraseButton.addEventListener("click", eraseSelected, false)
+        //绑定画图事件
+        var myCanvas = document.getElementById("myCanvas")
+        myCanvas.addEventListener("mousedown", myCanvasMouseDown, false)
+        myCanvas.addEventListener("mousemove", myCanvasMouseMove, false)
+        window.addEventListener("mouseup", myCanvasMouseUp, false)
+      </script>
+</html>
