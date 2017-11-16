@@ -65,6 +65,7 @@
         var lineButton = document.getElementById("line")
         var curveButton = document.getElementById("curve")
         var eraseButton = document.getElementById("erase")
+        //graphPool中存储着每个图形对象，deletePool中存储者每个点对应的对象
         var graphPool = new Array()
         var deletePool = new Array()
         //diagram.aab()
@@ -147,6 +148,7 @@
                   circle1.clearCanvas()
                   circle1.draw()
                   graphPool.push(circle1)
+                  deletePool.push(circle1.redraw())
                   break
               case "rectangle":
                   var rectangle1 =new rectangle()
@@ -155,18 +157,17 @@
                   rectangle1.clearCanvas()
                   rectangle1.draw()
                   graphPool.push(rectangle1)
+
                   break
               case "line":
                   break
               case "curve":
-
+              case "erase":
                   break
-                break
-                break
-                break
-              default:
-
             }
+            //erase 存储到deletepool
+            var temp = graphPool.pop
+
             for (var i = 0; i < graphPool.length; i++) {
               graphPool[i].draw()
               //console.log(graphPool[i]);
