@@ -68,6 +68,7 @@
         //graphPool中存储着每个图形对象，deletePool中存储者每个点对应的对象
         var graphPool = new Array()
         var deletePool = new Array()
+        var graphname = 0
         //diagram.aab()
         //选择哪种图形需要画
         function circleSelected(){
@@ -87,14 +88,33 @@
         }
         function myCanvasMouseDown(event){
           if(event.button == 0) {
+            console.log("press");
             diagram.setStart(event.offsetX,event.offsetY)
             if(shap == "erase"){
               var myCanvas = document.getElementById("myCanvas")
               var context = myCanvas.getContext('2d')
-              for (var i = 0; i < graphPool.length; i++) {
-                graphPool[i]
-              }
-                  console.log("sss");
+                  var needDeleteName =  diagram.delete(event.offsetX,event.offsetY,deletePool)
+                  //console.log(event.offsetX+"abc"+event.offsetY);
+                  console.log(needDeleteName);
+                  console.log(graphPool);
+                  for(var i = 0;i < graphPool.length;i++){
+                    if(graphPool[i].name == needDeleteName){
+                      console.log("sss");
+                      graphPool.splice(i,1)
+                      diagram.clearCanvas()
+                      // for (var i = 0; i < graphPool.length; i++) {
+                      //   graphPool[i].draw()
+                      //   //console.log(graphPool[i]);
+                      // }
+                      //var width = myCanvas.width
+                      //var height = myCanvas.height
+                      //context.clearRect(0,0,width,height);
+                      console.log(graphPool);
+                      break
+                    }
+                  }
+
+                  //console.log("sss");
             }
             isMouseDown = true
           }
@@ -104,6 +124,7 @@
           if(isMouseDown){
             switch (shap) {
               case "circle":
+            //  console.log(event.offsetX,event.offsetY);
                   var circle1 =new circle()
                   circle1.setStart(diagram.startX,diagram.startY)
                   circle1.setFinal(event.offsetX,event.offsetY)
@@ -133,28 +154,40 @@
                 break
                 break
             }
+
           }
+
         }
         function myCanvasMouseUp(event){
+          diagram.clearCanvas()
+          for (var i = 0; i < graphPool.length; i++) {
+            graphPool[i].draw()
+            //console.log(graphPool[i]);
+          }
           if(isMouseDown){
             // for (var i = 0; i < graph.length; i++) {
             //   graph[i]
             // }
+
             switch (shap) {
+
               case "circle":
                   var circle1 =new circle()
                   circle1.setStart(diagram.startX,diagram.startY)
                   circle1.setFinal(event.offsetX,event.offsetY)
-                  circle1.clearCanvas()
-                  circle1.draw()
+                  //circle1.clearCanvas()
+                  circle1.setName(graphname)
                   graphPool.push(circle1)
-                  deletePool.push(circle1.redraw())
+                  var temp2 = circle1.redraw(graphname)
+                  deletePool.push(temp2)
+                  graphname++
+                  //console.log(deletePool);
                   break
               case "rectangle":
                   var rectangle1 =new rectangle()
                   rectangle1.setStart(diagram.startX,diagram.startY)
                   rectangle1.setFinal(event.offsetX,event.offsetY)
-                  rectangle1.clearCanvas()
+                  //rectangle1.clearCanvas()
                   rectangle1.draw()
                   graphPool.push(rectangle1)
 
@@ -166,12 +199,8 @@
                   break
             }
             //erase 存储到deletepool
-            var temp = graphPool.pop
+            //var temp = graphPool.pop
 
-            for (var i = 0; i < graphPool.length; i++) {
-              graphPool[i].draw()
-              //console.log(graphPool[i]);
-            }
             isMouseDown = false
           }
         }
