@@ -7,8 +7,9 @@ body{
 /*导航条*/
 #nav {background-color:rgba(0,152,50,0.4);
       color:#fff;
-      height:30px;
-      line-height:25px;
+      height:50px;
+      width:1600px;
+      line-height:50px;
       text-align:center;
       list-style:none;
 }
@@ -16,29 +17,35 @@ body{
    color:rgba(0,0,0,0.7);
  }
  #nav li{
-   width:10%;
-   height: 30px;
-   float:left;
+   width:7%;
+   height: 50px;
+    float: left;
+   display:inline-table;
    position:relative;
    z-index:1;
  }
  #nav li .title{
    display:block;
+   font-size: 110%;
+   text-align: center;
  }
  #nav li .title:hover{
    background-color:rgba(255, 255, 51,0.4);
  }
  #nav li .submenu{
    width:100%;
-   margin:0 auto;
-   background-color: rgba(253,152,0,0.7);
+   margin:2px auto;
+   background-color: rgba(0,0,0,0);
    position:absolute;
    left:0;
-   top:25px;
+   top:50px;
    display:none;
    height: 0px;
  }
  #nav li .submenu dd{
    border-top:1px dotted #ddd;
    color:rgba(0,0,0,0.7);
+ }
+ .select{
+   width: 100px;
  }

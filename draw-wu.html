@@ -5,45 +5,50 @@
     <title></title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/canvas.css">
+    <link rel="stylesheet" href="css/body.css">
+    <link rel="stylesheet" href="css/colorofcanvas.css">
+    <!-- 样式使用bootstrap使界面美化 -->
+    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
     </script>
   </head>
   <body>
     <!-- 导航栏 -->
-    <div>
+    <div class="body">
     <ul id="nav" >
     <!-- 有二级菜单的，给li加class="menu" 没有的不用加 -->
+      <li class="menu"></li>
       <li class="menu">
        <a href="#" class="title">画图形</a>
        <dl class="submenu">
-        <dd><button type="button" id="rect" class="select">矩形</button></dd>
-        <dd><button type="button" id="circle" class="select">圆形</button></dd>
+        <dd><button type="button" id="rect" class="select btn btn-default">矩形</button></dd>
+        <dd><button type="button" id="circle" class="select btn btn-default">圆形</button></dd>
        </dl>
       </li>
       <li class="menu">
        <a href="#" class="title">画线</a>
        <dl class="submenu">
-        <dd><button type="button" id="line" class="select">直线</button></dd>
-        <dd><button type="button" id="curve" class="select">曲线</button></dd>
+        <dd><button type="button" id="line" class="select btn btn-default">直线</button></dd>
+        <dd><button type="button" id="curve" class="select btn btn-default">曲线</button></dd>
        </dl>
       </li>
       <li class="menu">
        <a href="#" class="title">读取/存储</a>
        <dl class="submenu">
-        <dd><button type="button" id="line" class="select">导入</button></dd>
-        <dd><button type="button" id="curve" class="select">保存</button></dd>
+        <dd><button type="button" id="line" class="select btn btn-default">导入</button></dd>
+        <dd><button type="button" id="curve" class="select btn btn-default">保存</button></dd>
        </dl>
       </li>
       <li class="menu">
        <a href="#" class="title">样式</a>
        <dl class="submenu">
-        <dd><button type="button" id="line" class="select">粗细</button></dd>
-        <dd><button type="button" id="curve" class="select">颜色</button></dd>
+        <dd><button type="button" id="widthofcanvas" class="select btn btn-default">粗细</button></dd>
+        <dd><button type="button" id="colorofcanvas" class="select btn btn-default">颜色</button></dd>
        </dl>
       </li>
       <li class="menu">
        <a href="#" class="title">橡皮擦</a>
        <dl class="submenu">
-        <dd><button type="button" id="erase" class="select">橡皮擦</button></dd>
+        <dd><button type="button" id="erase" class="select btn btn-default">橡皮擦</button></dd>
        </dl>
       </li>
     </nav><!--end nav-->
@@ -55,180 +60,13 @@
   </body>
       <!-- 导航栏 -->
       <script type="text/javascript" src="js/header.js"></script>
-      <script type="text/javascript" src="js/a.js"></script>
+      <script type="text/javascript" src="js/object/graph.js"></script>
+      <script type="text/javascript" src="js/settingCanvasStyle.js"></script>
+      <script type="text/javascript" src="js/main.js"></script>
+      <script type="text/javascript" src="js/object/circle.js"></script>
+      <script type="text/javascript" src="js/object/curve.js"></script>
+      <script type="text/javascript" src="js/object/line.js"></script>
+      <script type="text/javascript" src="js/object/rectangle.js"></script>
       <script type="text/javascript">
-        var shap = ""
-        var isMouseDown = false
-        var diagram = graph()
-        var circleButton = document.getElementById("circle")
-        var rectButton = document.getElementById("rect")
-        var lineButton = document.getElementById("line")
-        var curveButton = document.getElementById("curve")
-        var eraseButton = document.getElementById("erase")
-        //graphPool中存储着每个图形对象，deletePool中存储者每个点对应的对象
-        var graphPool = new Array()
-        var deletePool = new Array()
-        var graphname = 0
-        //diagram.aab()
-        //选择哪种图形需要画
-        function circleSelected(){
-          shap = "circle"
-        }
-        function rectSelected(){
-          shap = "rectangle"
-        }
-        function lineSelected(){
-          shap = "line"
-        }
-        function curveSelected(){
-          shap = "curve"
-        }
-        function eraseSelected(){
-          shap = "erase"
-        }
-        function myCanvasMouseDown(event){
-          if(event.button == 0) {
-            //console.log("press");
-            diagram.setStart(event.offsetX,event.offsetY)
-            if(shap == "erase"){
-              var myCanvas = document.getElementById("myCanvas")
-              var context = myCanvas.getContext('2d')
-                  var needDeleteName =  diagram.delete(event.offsetX,event.offsetY,deletePool)
-                  //console.log(event.offsetX+"abc"+event.offsetY);
-                  //console.log(needDeleteName);
-                  //console.log(graphPool);
-                  for(var i = 0;i < graphPool.length;i++){
-                    if(graphPool[i].name == needDeleteName){
-                      //console.log("sss");
-                      graphPool.splice(i,1)
-                      diagram.clearCanvas()
-                      // for (var i = 0; i < graphPool.length; i++) {
-                      //   graphPool[i].draw()
-                      //   //console.log(graphPool[i]);
-                      // }
-                      //var width = myCanvas.width
-                      //var height = myCanvas.height
-                      //context.clearRect(0,0,width,height);
-                      console.log(graphPool);
-                      break
-                    }
-                  }
-
-                  //console.log("sss");
-            }
-            isMouseDown = true
-          }
-
-        }
-        function myCanvasMouseMove(event){
-          if(isMouseDown){
-            diagram.clearCanvas()
-            for (var i = 0; i < graphPool.length; i++) {
-              graphPool[i].draw()
-            }
-            switch (shap) {
-              case "circle":
-            //  console.log(event.offsetX,event.offsetY);
-                  var circle1 =new circle()
-                  circle1.setStart(diagram.startX,diagram.startY)
-                  circle1.setFinal(event.offsetX,event.offsetY)
-                  //circle1.clearCanvas()
-                  circle1.draw()
-                  // for (var i = 0; i < graphPool.length; i++) {
-                  //   graphPool[i].draw()
-                  // }
-                  break
-              case "rectangle":
-                  var rectangle1 =new rectangle()
-                  rectangle1.setStart(diagram.startX,diagram.startY)
-                  rectangle1.setFinal(event.offsetX,event.offsetY)
-                  rectangle1.draw()
-                  break
-              case "line":
-                  var line1 =new line()
-                  line1.setStart(diagram.startX,diagram.startY)
-                  line1.setFinal(event.offsetX,event.offsetY)
-                  //rectangle1.clearCanvas()
-                  line1.draw()
-                  break
-              case "curve":
-
-                  break
-
-                break
-                break
-                break
-            }
-
-          }
-
-        }
-        function myCanvasMouseUp(event){
-
-          if(isMouseDown){
-            // for (var i = 0; i < graph.length; i++) {
-            //   graph[i]
-            // }
-            diagram.clearCanvas()
-            for (var i = 0; i < graphPool.length; i++) {
-              graphPool[i].draw()
-              //console.log(graphPool[i]);
-            }
-            switch (shap) {
-
-              case "circle":
-                  var circle1 =new circle()
-                  circle1.setStart(diagram.startX,diagram.startY)
-                  circle1.setFinal(event.offsetX,event.offsetY)
-                  //circle1.clearCanvas()
-                  circle1.draw()
-                  circle1.setName(graphname)
-                  graphPool.push(circle1)
-                  var temp2 = circle1.redraw(graphname)
-                  deletePool.push(temp2)
-                  graphname++
-                  //console.log(deletePool);
-                  break
-              case "rectangle":
-                  var rectangle1 =new rectangle()
-                  rectangle1.setStart(diagram.startX,diagram.startY)
-                  rectangle1.setFinal(event.offsetX,event.offsetY)
-                  rectangle1.draw()
-                  rectangle1.setName(graphname)
-                  graphPool.push(rectangle1)
-                  var temp2 = rectangle1.redraw(graphname)
-                  deletePool.push(temp2)
-                  graphname++
-                  break
-              case "line":
-              var line1 =new line()
-                  line1.setStart(diagram.startX,diagram.startY)
-                  line1.setFinal(event.offsetX,event.offsetY)
-                  line1.draw()
-                  line1.setName(graphname)
-                  graphPool.push(line1)
-                  var temp2 = line1.redraw(graphname)
-                  deletePool.push(temp2)
-                  graphname++
-                  break
-              case "curve":
-            }
-            //erase 存储到deletepool
-            //var temp = graphPool.pop
-
-            isMouseDown = false
-          }
-        }
-        //绑定选择事件
-        circleButton.addEventListener("click", circleSelected, false)
-        rectButton.addEventListener("click", rectSelected, false)
-        lineButton.addEventListener("click", lineSelected, false)
-        curveButton.addEventListener("click", curveSelected, false)
-        eraseButton.addEventListener("click", eraseSelected, false)
-        //绑定画图事件
-        var myCanvas = document.getElementById("myCanvas")
-        myCanvas.addEventListener("mousedown", myCanvasMouseDown, false)
-        myCanvas.addEventListener("mousemove", myCanvasMouseMove, false)
-        window.addEventListener("mouseup", myCanvasMouseUp, false)
       </script>
 </html>
