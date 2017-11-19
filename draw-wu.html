@@ -88,18 +88,18 @@
         }
         function myCanvasMouseDown(event){
           if(event.button == 0) {
-            console.log("press");
+            //console.log("press");
             diagram.setStart(event.offsetX,event.offsetY)
             if(shap == "erase"){
               var myCanvas = document.getElementById("myCanvas")
               var context = myCanvas.getContext('2d')
                   var needDeleteName =  diagram.delete(event.offsetX,event.offsetY,deletePool)
                   //console.log(event.offsetX+"abc"+event.offsetY);
-                  console.log(needDeleteName);
-                  console.log(graphPool);
+                  //console.log(needDeleteName);
+                  //console.log(graphPool);
                   for(var i = 0;i < graphPool.length;i++){
                     if(graphPool[i].name == needDeleteName){
-                      console.log("sss");
+                      //console.log("sss");
                       graphPool.splice(i,1)
                       diagram.clearCanvas()
                       // for (var i = 0; i < graphPool.length; i++) {
@@ -122,29 +122,34 @@
         }
         function myCanvasMouseMove(event){
           if(isMouseDown){
+            diagram.clearCanvas()
+            for (var i = 0; i < graphPool.length; i++) {
+              graphPool[i].draw()
+            }
             switch (shap) {
               case "circle":
             //  console.log(event.offsetX,event.offsetY);
                   var circle1 =new circle()
                   circle1.setStart(diagram.startX,diagram.startY)
                   circle1.setFinal(event.offsetX,event.offsetY)
-                  circle1.clearCanvas()
+                  //circle1.clearCanvas()
                   circle1.draw()
-                  for (var i = 0; i < graphPool.length; i++) {
-                    graphPool[i].draw()
-                  }
+                  // for (var i = 0; i < graphPool.length; i++) {
+                  //   graphPool[i].draw()
+                  // }
                   break
               case "rectangle":
                   var rectangle1 =new rectangle()
                   rectangle1.setStart(diagram.startX,diagram.startY)
                   rectangle1.setFinal(event.offsetX,event.offsetY)
-                  rectangle1.clearCanvas()
                   rectangle1.draw()
-                  for (var i = 0; i < graphPool.length; i++) {
-                    graphPool[i].draw()
-                  }
                   break
               case "line":
+                  var line1 =new line()
+                  line1.setStart(diagram.startX,diagram.startY)
+                  line1.setFinal(event.offsetX,event.offsetY)
+                  //rectangle1.clearCanvas()
+                  line1.draw()
                   break
               case "curve":
 
@@ -159,16 +164,16 @@
 
         }
         function myCanvasMouseUp(event){
-          diagram.clearCanvas()
-          for (var i = 0; i < graphPool.length; i++) {
-            graphPool[i].draw()
-            //console.log(graphPool[i]);
-          }
+
           if(isMouseDown){
             // for (var i = 0; i < graph.length; i++) {
             //   graph[i]
             // }
-
+            diagram.clearCanvas()
+            for (var i = 0; i < graphPool.length; i++) {
+              graphPool[i].draw()
+              //console.log(graphPool[i]);
+            }
             switch (shap) {
 
               case "circle":
@@ -176,6 +181,7 @@
                   circle1.setStart(diagram.startX,diagram.startY)
                   circle1.setFinal(event.offsetX,event.offsetY)
                   //circle1.clearCanvas()
+                  circle1.draw()
                   circle1.setName(graphname)
                   graphPool.push(circle1)
                   var temp2 = circle1.redraw(graphname)
@@ -187,16 +193,25 @@
                   var rectangle1 =new rectangle()
                   rectangle1.setStart(diagram.startX,diagram.startY)
                   rectangle1.setFinal(event.offsetX,event.offsetY)
-                  //rectangle1.clearCanvas()
                   rectangle1.draw()
+                  rectangle1.setName(graphname)
                   graphPool.push(rectangle1)
-
+                  var temp2 = rectangle1.redraw(graphname)
+                  deletePool.push(temp2)
+                  graphname++
                   break
               case "line":
+              var line1 =new line()
+                  line1.setStart(diagram.startX,diagram.startY)
+                  line1.setFinal(event.offsetX,event.offsetY)
+                  line1.draw()
+                  line1.setName(graphname)
+                  graphPool.push(line1)
+                  var temp2 = line1.redraw(graphname)
+                  deletePool.push(temp2)
+                  graphname++
                   break
               case "curve":
-              case "erase":
-                  break
             }
             //erase 存储到deletepool
             //var temp = graphPool.pop

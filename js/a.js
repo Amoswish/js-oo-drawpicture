@@ -37,28 +37,20 @@ function graph(){
   o.delete = function(x,y,deletePool){
     var tempname = -1
     //传入当前摁下的x,y，并且找到摁下的对象名
-    //console.log(deletePool);
     for (var i = 0; i < deletePool.length; i++) {
       for(var m = 0; m < deletePool[i].length;m++){
         for(var j = -10;j<10;j++){
           for(var k = -10; k<10;k++){
-            //console.log("asd");
             var tempx = x+j
             var tempy = y+k
-            //console.log(deletePool);
-            //console.log(tempx+"bcd"+tempy);
-            //console.log(deletePool[i].nowx +"dsad"+deletePool[i].nowy);
             if(tempx == deletePool[i][m].nowx && tempy == deletePool[i][m].nowy){
-              //console.log(deletePool[i][m]);
               tempname = deletePool[i][m].name
-              //return (deletePool[i][m].name)
               break
             }
           }
         }
       }
     }
-    console.log(tempname);
     return tempname
   }
   return o
@@ -71,14 +63,14 @@ function circle(){
     var context = myCanvas.getContext('2d')
     // context.strokeRect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
     context.beginPath()
-    context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI * 2,true)
+    context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI*2,true)
     context.stroke()
     context.closePath()
     //context.strokeRect(0, 0, 100, 100)
     //o.name = _name
   }
   o.redraw = function(_name){
-     var trace = new Array()
+    var trace = new Array()
     var staX = this.startX
     var staY = this.startY
     var finX = this.finalX
@@ -134,21 +126,69 @@ function circle(){
     //     }
     //     return
     // }
-    function tempcheck(context){
-      for(var i = staX;i<finX ;i++){
-        for (var j = staY;j<finY;j++){
-          if(context.isPointInStroke(i,j)){
-            var temp = {
-              nowx:i,
-              nowy:j,
-              name:_name,
+    function tempcheck(context,_name){
+      if(staX<=finX){
+        if(staY<=finY){
+          for(var i = staX-10;i<=finX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
             }
-            //console.log(x+"ss"+y);
-            //console.log(temp)
-            trace.push(temp)
+          }
+        }
+        else if (staY>finY) {
+          for(var i = staX-10;i<=staY+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
         }
       }
+
+      else if (staX>finX) {
+        if(staY<=finY){
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
       }
+
     }
     var myCanvas = document.getElementById("myCanvas")
     var context = myCanvas.getContext('2d')
@@ -156,14 +196,13 @@ function circle(){
     //console.log("begin");
     context.beginPath()
     context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI * 2,true)
-    //context.stroke()
+    context.stroke()
     //console.log("begin1");
     //console.log(context.isPointInPath(this.startX+20,this.startY+20))
     //console.log("begin2");
     //dfs(staX,staY,context)
-    tempcheck(context)
+    tempcheck(context,_name)
     context.closePath()
-
     //console.log(trace);
     return trace
   }
@@ -181,15 +220,279 @@ function rectangle(){
     context.stroke()
     context.closePath()
   }
+  o.redraw = function(_name){
+    var trace = new Array()
+    var staX = this.startX
+    var staY = this.startY
+    var finX = this.finalX
+    var finY = this.finalY
+    function tempcheck(context,_name){
+      if(staX<=finX){
+        if(staY<=finY){
+          for(var i = staX-10;i<=finX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = staX-10;i<=staY+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+
+      else if (staX>finX) {
+        if(staY<=finY){
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+    }
+    var myCanvas = document.getElementById("myCanvas")
+    var context = myCanvas.getContext('2d')
+    context.beginPath()
+    context.rect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
+    tempcheck(context,_name)
+    context.closePath()
+    //console.log(trace);
+    return trace
+  }
+  return o
+}
+function line(){
+  var o = graph()
+  o.draw = function (){
+    var myCanvas = document.getElementById("myCanvas")
+    var context = myCanvas.getContext('2d')
+    //context.clearRect(0,0,width,height)
+    context.lineWidth=1
+    context.beginPath()
+    context.moveTo(this.startX,this.startY);
+    context.lineTo(this.finalX,this.finalY);
+    //context.rect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
+    context.stroke()
+    context.closePath()
+  }
+  o.redraw = function(_name){
+    var trace = new Array()
+    var staX = this.startX
+    var staY = this.startY
+    var finX = this.finalX
+    var finY = this.finalY
+    function tempcheck(context,_name){
+      if(staX<=finX){
+        if(staY<=finY){
+          for(var i = staX-10;i<=finX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = staX-10;i<=staY+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+
+      else if (staX>finX) {
+        if(staY<=finY){
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+    }
+    var myCanvas = document.getElementById("myCanvas")
+    var context = myCanvas.getContext('2d')
+    context.beginPath()
+    context.moveTo(this.startX,this.startY)
+    context.lineTo(this.finalX,this.finalY)
+    tempcheck(context,_name)
+    context.closePath()
+    //console.log(trace);
+    return trace
+  }
   return o
 }
 function curve(){
   var array = new Array()
   var o = graph()
   o.path = array
-  o.drawcurve = function (){
-    context.strokeRect(startX, startY, finalX-startX, finalY-startY)
-  }
+  var o = graph()
+  o.draw = function (){
+    var myCanvas = document.getElementById("myCanvas")
+    var context = myCanvas.getContext('2d')
+    //context.clearRect(0,0,width,height)
+    //context.lineWidth=1
+    for (var i = 0; i < path.length; i++) {
+      //path[i]
+      context.beginPath()
+      context.moveTo(this.startX,this.startY)
+      context.lineTo(this.finalX,this.finalY)
+      context.stroke()
+      context.closePath()
+    }
 
+  }
+  o.redraw = function(_name){
+    var trace = new Array()
+    var staX = this.startX
+    var staY = this.startY
+    var finX = this.finalX
+    var finY = this.finalY
+    function tempcheck(context,_name){
+      if(staX<=finX){
+        if(staY<=finY){
+          for(var i = staX-10;i<=finX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = staX-10;i<=staY+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+
+      else if (staX>finX) {
+        if(staY<=finY){
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = staY-10;j<=finY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+        else if (staY>finY) {
+          for(var i = finX-10;i<=staX+10 ;i++){
+            for (var j = finY-10;j<=staY+10;j++){
+              if(context.isPointInStroke(i,j)){
+                var temp = {
+                  nowx:i,
+                  nowy:j,
+                  name:_name,
+                }
+                trace.push(temp)
+              }
+            }
+          }
+        }
+      }
+    }
+    var myCanvas = document.getElementById("myCanvas")
+    var context = myCanvas.getContext('2d')
+    context.beginPath()
+    context.rect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
+    tempcheck(context,_name)
+    context.closePath()
+    //console.log(trace);
+    return trace
+  }
+  return o
   return o
 }
