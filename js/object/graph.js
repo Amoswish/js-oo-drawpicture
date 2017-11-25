@@ -4,41 +4,45 @@ function graph(){
     startY:0,
     finalX:0,
     finalY:0,
-    widthofdraw:2,
+    widthofdraw:3,
     color:"",
     name:0,
     path:Array(),
+    graphType:graph,
   }
-  o.recordPath = function (_x,_y){
+  o.recordPath =  function (_x,_y){
     var temp = {
       x:_x,
       y:_y,
     }
-    o.path.push(temp)
+    this.path.push(temp)
   }
   o.getPath = function (){
-    return o.path
+    return this.path
   }
   o.setPath = function(_path){
-    o.path = _path
+    this.path = _path
   }
   o.setStart = function(_startX,_startY){
-    o.startX = _startX
+    this.startX = _startX
     o.startY = _startY
         // alert("s")
   }
   o.setFinal = function(_finalX,_finalY){
-    o.finalX = _finalX
-    o.finalY = _finalY
+    this.finalX = _finalX
+    this.finalY = _finalY
+  }
+  o.setType = function(_type){
+    this.graphType = _type
   }
   o.setName = function(_name){
-    o.name = _name
+    this.name = _name
   }
   o.setWidthofdraw = function(_widthofdraw){
-    o.widthofdraw = _widthofdraw
+    this.widthofdraw = _widthofdraw
   }
   o.setColor = function(_color){
-    o.color = _color
+    this.color = _color
   }
   o.clearCanvas = function(){
     var myCanvas = document.getElementById("myCanvas")

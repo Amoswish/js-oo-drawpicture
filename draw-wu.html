@@ -18,50 +18,55 @@
     <!-- 有二级菜单的，给li加class="menu" 没有的不用加 -->
       <li class="menu"></li>
       <li class="menu">
-       <a href="#" class="title">画图形</a>
+       <a href="#" class="title">方..圆</a>
        <dl class="submenu">
         <dd><button type="button" id="rect" class="select btn btn-default">矩形</button></dd>
         <dd><button type="button" id="circle" class="select btn btn-default">圆形</button></dd>
        </dl>
       </li>
       <li class="menu">
-       <a href="#" class="title">画线</a>
+       <a href="#" class="title">直..曲</a>
        <dl class="submenu">
         <dd><button type="button" id="line" class="select btn btn-default">直线</button></dd>
         <dd><button type="button" id="curve" class="select btn btn-default">曲线</button></dd>
        </dl>
       </li>
       <li class="menu">
-       <a href="#" class="title">读取/存储</a>
+       <a href="#" class="title">存..取</a>
        <dl class="submenu">
-        <dd><button type="button" id="line" class="select btn btn-default">导入</button></dd>
-        <dd><button type="button" id="curve" class="select btn btn-default">保存</button></dd>
+        <dd><button type="button" id="store" class="select btn btn-default">保存</button></dd>
+        <dd><button type="button" id="readStorage" class="select btn btn-default">导入</button></dd>
        </dl>
       </li>
       <li class="menu">
-       <a href="#" class="title">样式</a>
+       <a href="#" class="title">变个样!</a>
        <dl class="submenu">
         <dd><button type="button" id="widthofcanvas" class="select btn btn-default">粗细</button></dd>
         <dd><button type="button" id="colorofcanvas" class="select btn btn-default">颜色</button></dd>
        </dl>
       </li>
       <li class="menu">
-       <a href="#" class="title">橡皮擦</a>
+       <a href="#" class="title">画错了？</a>
        <dl class="submenu">
         <dd><button type="button" id="erase" class="select btn btn-default">橡皮擦</button></dd>
+        <dd><button type="button" id="clear" class="select btn btn-default">清屏</button></dd>
        </dl>
       </li>
     </nav><!--end nav-->
     </div>
     <!-- 导航栏结束 -->
     <!-- 画布 -->
-    <canvas class="canvas" id="myCanvas"  height="500" width="955.9"></canvas>
+    <div class = "canvasBackground">
+    <canvas class="canvas" id="myCanvas"  height="490" width="1000" color="white"></canvas>
+    <div>
     <!-- 画布结束 -->
   </body>
       <!-- 导航栏 -->
       <script type="text/javascript" src="js/header.js"></script>
       <script type="text/javascript" src="js/object/graph.js"></script>
       <script type="text/javascript" src="js/settingCanvasStyle.js"></script>
+      <script type="text/javascript" src="js/fileOperator/readStorageSelected.js"></script>
+      <script type="text/javascript" src="js/fileOperator/storeSelected.js"></script>
       <script type="text/javascript" src="js/main.js"></script>
       <script type="text/javascript" src="js/object/circle.js"></script>
       <script type="text/javascript" src="js/object/curve.js"></script>

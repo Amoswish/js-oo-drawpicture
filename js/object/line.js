@@ -3,13 +3,11 @@ function line(){
   o.draw = function (){
     var myCanvas = document.getElementById("myCanvas")
     var context = myCanvas.getContext('2d')
-    //context.clearRect(0,0,width,height)
-    context.lineWidth=o.widthofdraw
-    context.strokeStyle =o.color
+    context.lineWidth=this.widthofdraw
+    context.strokeStyle =this.color
     context.beginPath()
     context.moveTo(this.startX,this.startY);
     context.lineTo(this.finalX,this.finalY);
-    //context.rect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
     context.stroke()
     context.closePath()
   }

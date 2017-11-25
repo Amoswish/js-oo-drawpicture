@@ -5,24 +5,37 @@ body{
   font-size:120%;
 }
 /*导航条*/
-#nav {background-color:rgba(0,152,50,0.4);
-      color:#fff;
+#nav {
+      /*background-color:rgba(0,152,50,0.4);*/
+      /*color:#fff;*/
       height:50px;
       width:1600px;
       line-height:50px;
       text-align:center;
       list-style:none;
+      /*mask-image: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, #ffffff 25%, #ffffff 75%, rgba(255, 255, 255, 0) 100%);*/
+      text-align: center;
+      background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 25%, rgba(255, 255, 255, 0.2) 75%, rgba(255, 255, 255, 0) 100%);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.1), inset 0 0 1px rgba(255, 255, 255, 0.6);
 }
  #nav a{
    color:rgba(0,0,0,0.7);
+   display: inline-block;
  }
  #nav li{
    width:7%;
    height: 50px;
-    float: left;
+   float: left;
    display:inline-table;
    position:relative;
    z-index:1;
+   /*padding: 18px;*/
+   font-family: "Open Sans";
+   text-transform:uppercase;
+   color: rgba(255, 255, 255, 0.5);
+   font-size: 18px;
+   text-decoration: none;
+   display: block;
  }
  #nav li .title{
    display:block;

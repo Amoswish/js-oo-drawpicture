@@ -1,10 +1,11 @@
 function rectangle(){
   var o = graph()
+  o.setType(rectangle)
   o.draw = function (){
     var myCanvas = document.getElementById("myCanvas")
     var context = myCanvas.getContext('2d')
-    context.lineWidth=o.widthofdraw
-    context.strokeStyle =o.color
+    context.lineWidth=this.widthofdraw
+    context.strokeStyle =this.color
     context.beginPath()
     context.rect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
     context.stroke()

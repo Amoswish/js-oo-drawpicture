@@ -8,7 +8,6 @@ function submitWidth(){
   //document.getElementById('colorofcanvasDiv').style.display = "none"
 }
 function seleteWidth(){
-
   var div = document.createElement("div")
   var div = document.createElement("div")
   var divattr = document.createAttribute("class")

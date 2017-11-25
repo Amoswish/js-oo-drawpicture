@@ -6,10 +6,15 @@ var rectButton = document.getElementById("rect")
 var lineButton = document.getElementById("line")
 var curveButton = document.getElementById("curve")
 var eraseButton = document.getElementById("erase")
+var storeButton = document.getElementById("store")
+var clearButton = document.getElementById("clear")
+var readStorageButton = document.getElementById("readStorage")
 //graphPool中存储着每个图形对象，deletePool中存储者每个点对应的对象
 var graphPool = new Array()
 var deletePool = new Array()
 var graphname = 0
+var myCanvas = document.getElementById("myCanvas")
+var context = myCanvas.getContext('2d')
 //diagram.aab()
 //选择哪种图形需要画
 function circleSelected(){
@@ -27,21 +32,20 @@ function curveSelected(){
 function eraseSelected(){
   shap = "erase"
 }
+function clearSelected(){
+    graphPool.splice(0,graphPool.length)
+    deletePool.splice(0,deletePool.length)
+    diagram.clearCanvas()
+}
+
 function myCanvasMouseDown(event){
   if(event.button == 0) {
     //console.log("press");
-    diagram = graph()
     diagram.setStart(event.offsetX,event.offsetY)
     if(shap == "erase"){
-      var myCanvas = document.getElementById("myCanvas")
-      var context = myCanvas.getContext('2d')
           var needDeleteName =  diagram.delete(event.offsetX,event.offsetY,deletePool)
-          //console.log(event.offsetX+"abc"+event.offsetY);
-          //console.log(needDeleteName);
-          //console.log(graphPool);
           for(var i = 0;i < graphPool.length;i++){
             if(graphPool[i].name == needDeleteName){
-              //console.log("sss");
               graphPool.splice(i,1)
             }
           }
@@ -50,6 +54,7 @@ function myCanvasMouseDown(event){
             graphPool[i].draw()
           }
     }
+
     isMouseDown = true
   }
 
@@ -58,9 +63,12 @@ function myCanvasMouseMove(event){
   if(isMouseDown){
     diagram.clearCanvas()
     diagram.recordPath(event.offsetX,event.offsetY)
-    for (var i = 0; i < graphPool.length; i++) {
-      graphPool[i].draw()
+    if (graphPool.length!=0) {
+      for (var i = 0; i < graphPool.length; i++) {
+        graphPool[i].draw()
+      }
     }
+
     switch (shap) {
       case "circle":
     //  console.log(event.offsetX,event.offsetY);
@@ -96,7 +104,6 @@ function myCanvasMouseMove(event){
           curve1.setPath(diagram.path)
           curve1.draw()
           break
-
         break
         break
         break
@@ -182,6 +189,9 @@ rectButton.addEventListener("click", rectSelected, false)
 lineButton.addEventListener("click", lineSelected, false)
 curveButton.addEventListener("click", curveSelected, false)
 eraseButton.addEventListener("click", eraseSelected, false)
+clearButton.addEventListener("click", clearSelected, false)
+readStorage.addEventListener("click", readStorageSelected, false)
+store.addEventListener("click", storeSelected, false)
 //绑定画图事件
 var myCanvas = document.getElementById("myCanvas")
 myCanvas.addEventListener("mousedown", myCanvasMouseDown, false)

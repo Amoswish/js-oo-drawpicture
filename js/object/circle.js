@@ -1,18 +1,17 @@
 function circle(){
   var o = new graph()
   o.radius = 0
+  o.setType(circle)
   o.draw = function (){
     var myCanvas = document.getElementById("myCanvas")
     var context = myCanvas.getContext('2d')
     // context.strokeRect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
     context.beginPath()
-    context.lineWidth=o.widthofdraw
-    context.strokeStyle =o.color
-    context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI*2,true)
+    context.lineWidth=this.widthofdraw
+    context.strokeStyle =this.color
+    context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI * 2,true)
     context.stroke()
     context.closePath()
-    //context.strokeRect(0, 0, 100, 100)
-    //o.name = _name
   }
   o.redraw = function(_name){
     var trace = new Array()
@@ -136,19 +135,10 @@ function circle(){
     }
     var myCanvas = document.getElementById("myCanvas")
     var context = myCanvas.getContext('2d')
-    // context.strokeRect(this.startX, this.startY, this.finalX-this.startX, this.finalY-this.startY)
-    //console.log("begin");
     context.beginPath()
-
     context.arc(this.startX+(this.finalX-this.startX)/2,this.startY+(this.finalY-this.startY)/2,Math.abs(this.finalX-this.startX)/2,0,Math.PI * 2,true)
-    //context.stroke()
-    //console.log("begin1");
-    //console.log(context.isPointInPath(this.startX+20,this.startY+20))
-    //console.log("begin2");
-    //dfs(staX,staY,context)
     tempcheck(context,_name)
     context.closePath()
-    //console.log(trace);
     return trace
   }
   return o

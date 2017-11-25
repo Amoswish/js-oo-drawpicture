@@ -1,5 +1,8 @@
-.body{
+body{
   /*margin-left: 100px;*/
+  background-image: linear-gradient(to right top, #8e44ad 0%, #3498db 100%);
+}
+.body{
   margin-top: 50px;
-  width: inherit;
+  width: 100%;
 }

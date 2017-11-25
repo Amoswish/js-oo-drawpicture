@@ -1,6 +1,14 @@
+.canvasBackground{
+  margin-left: 50px;
+  background-color: white;
+  height: 497px;
+  width: 1007px;
+
+}
 .canvas{
    border:solid;
-   border-color: blue;
-   border-width:medium;
-   margin-left: 50px;
+   border-color: black;
+   border-width:7px;
+    border-color: black;
+   color: white;
 }
